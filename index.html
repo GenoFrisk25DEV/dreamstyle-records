@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>dreamstyle records</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #0b0614;
+  color: #f6eaff;
+}
+header {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+h1 {
+  text-transform: lowercase;
+  letter-spacing: 0.25em;
+}
+.release {
+  cursor: pointer;
+  margin: 0.8rem 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>dreamstyle records</h1>
+  <p>ambient · vaporwave · dream electronics</p>
+</header>
+
+<main style="max-width:700px;margin:auto;padding:1rem">
+
+  <section id="releases"></section>
+
+  <audio id="audio" controls style="width:100%;margin-top:1.5rem"></audio>
+
+</main>
+
+<script>
+const audio = document.getElementById("audio");
+
+fetch("assets/releases.json")
+  .then(r => r.json())
+  .then(list => {
+    const c = document.getElementById("releases");
+    list.forEach(t => {
+      const d = document.createElement("div");
+      d.className = "release";
+      d.textContent = `${t.title} · ${t.year}`;
+      d.onclick = () => {
+        audio.src = `assets/audio/${t.file}`;
+        audio.play();
+      };
+      c.appendChild(d);
+    });
+  });
+</script>
+
+</body>
+</html>
